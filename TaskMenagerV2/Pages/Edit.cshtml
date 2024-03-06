@@ -1,0 +1,55 @@
+﻿@page
+@inject MyDbContext DbContext
+@using TaskMenager.Components.dbcontroll;
+@using Microsoft.EntityFrameworkCore;
+@using TaskMenager.Components.Services;
+
+@model TaskMenagerV2.Pages.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container">
+    <h2>Edit</h2>
+
+    @foreach (var project in Model.Projects)
+    {
+        if(project.ProjectId != 0){
+            <div class="container">
+                <h3>Project: @project.Name</h3>
+                <form method="post">
+                    <input type="hidden" asp-for="Action" value="EditProject" />
+                    <input type="hidden" asp-for="editProject.ProjectId" value="@project.ProjectId" />
+                    <div class="form-group pt-3">
+                        <label asp-for="editProject.Name"></label>
+                        <input asp-for="editProject.Name" class="form-control  w-50" value="@project.Name" />
+                    </div>
+                    <div class="form-group pt-3 pb-3">
+                        <label asp-for="editProject.Description"></label>
+                        <input asp-for="editProject.Description" class="form-control  w-50" value="@project.Description" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
+
+                @foreach (var task in project.Tasks)
+                {
+                    <h3 class="pt-4">Task: @task.Description</h3>
+                    <form method="post">
+                        <input type="hidden" asp-for="Action" value="EditTask" />
+                        <input type="hidden" asp-for="editTask.Id" value="@task.Id" />
+                        <div class="form-group pt-3">
+                            <label asp-for="editTask.ProjectId"></label>
+                            <input asp-for="editTask.ProjectId" class="form-control  w-50" value="@task.ProjectId" />
+                        </div>
+                        <div class="form-group pt-3 pb-3">
+                            <label asp-for="editTask.Description"></label>
+                            <input asp-for="editTask.Description" class="form-control  w-50" value="@task.Description" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </form>
+                }
+                <hr style="border-top: 3px solid #000;" />
+            </div>
+        }
+    }
+</div>

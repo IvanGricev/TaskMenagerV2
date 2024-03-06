@@ -1,0 +1,91 @@
+﻿@page
+@model IndexModel
+@inject MyDbContext DbContext
+@using TaskMenager.Components.dbcontroll;
+@using Microsoft.EntityFrameworkCore;
+
+@{
+    ViewData["Title"] = "Home page";
+    var projects = DbContext.Projects.ToDictionary(p => p.ProjectId, p => p);
+    var colors = new string[] { "primary", "secondary", "success", "danger", "warning", "info", "dark" };
+    Random rand = new Random();
+}
+<div class="container">
+    <div class="pt-3 pb-3">
+        <div class="container">
+            <h2>Today's and upcomming tasks</h2>
+            @foreach (var task in DbContext.Tasks)
+            {
+                if (task.DateOfCreation.Date <= DateTime.Today)
+                {
+                    var color = colors[rand.Next(colors.Length)];
+
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-3 d-flex flex-column justify-content-start">
+                            <div class="card border border-3 rounded-5 text-white bg-@color h-100 d-flex flex-column justify-content-between p-3 shadow-sm">
+                                <div>@task.Description</div>
+                                <div>@task.DateOfCreation</div>
+                                @foreach (var project in projects.Values)
+                                {
+                                    if (project.ProjectId == task.ProjectId && task.ProjectId != 0)
+                                    {
+                                        <div>From project: @project.Name</div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+            <h2>Past tasks:</h2>
+            @foreach (var task in DbContext.Tasks)
+            {
+                if (task.DateOfCreation.Date < DateTime.Today)
+                {
+                    var color = colors[rand.Next(colors.Length)];
+
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-3 d-flex flex-column justify-content-start">
+                            <div class="card border border-3 rounded-5 text-white bg-@color h-100 d-flex flex-column justify-content-between p-3 shadow-sm">
+                                <div>@task.Description</div>
+                                <div>@task.DateOfCreation</div>
+                                @foreach (var project in projects.Values)
+                                {
+                                    if (project.ProjectId == task.ProjectId && task.ProjectId != 0)
+                                    {
+                                        <div>From project: @project.Name</div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="pt-3 pb-3 container">
+        <h2>Projects</h2>
+        <div>
+            @foreach (var project in projects.Values)
+            {
+                if (project.ProjectId != 0)
+                {
+                    var color = colors[rand.Next(colors.Length)];
+
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-3 d-flex flex-column justify-content-start">
+                            <div class="card border border-3 rounded-5 text-white bg-@color h-100 d-flex flex-column justify-content-between p-3 shadow-sm">
+                                <div>@project.Name</div>
+                                <div>@project.Description</div>
+                                <div>
+                                    <p>Project: @project.Name</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
