@@ -15,12 +15,12 @@
 <div class="container">
     <div class="pt-3 pb-3">
         <h2>Today's and upcomming tasks:</h2>
-        <div class="container">
+        <div class="container row">
             @foreach (var task in DbContext.Tasks)
             {
                 if (task.DateOfCompletion.Date >= DateTime.Today)
                 {
-                    <div class="row mb-4">
+                    <div class="col-md-4 mb-3 d-flex flex-column justify-content-start">
 
                         @if(task.ProjectId == 0)
                         {
@@ -37,24 +37,22 @@
                                 color = colors[task.ProjectId];
                             }
                         }
-                        <div class="col-md-4 mb-3 d-flex flex-column justify-content-start">
-                            <div class="card border border-3 rounded-5 text-white bg-@color h-100 w-75 d-flex flex-column justify-content-between p-3 shadow-sm">
-                                <div>@task.Description</div>
-                                <div class="pt-2">@task.DateOfCreation</div>
-                                @foreach (var project in projects.Values)
+                        <div class="card border border-3 rounded-5 text-white bg-@color h-100 w-100 d-flex flex-column justify-content-between p-3 shadow-sm">
+                            <div>@task.Description</div>
+                            <div class="pt-2">@task.DateOfCreation</div>
+                            @foreach (var project in projects.Values)
+                            {
+                                @if (project.ProjectId == task.ProjectId && task.ProjectId != 0)
                                 {
-                                    @if (project.ProjectId == task.ProjectId && task.ProjectId != 0)
-                                    {
-                                        <div class="pt-2">From project: @project.Name</div>
-                                    }
+                                    <div class="pt-2">From project: @project.Name</div>
                                 }
-                                <form method="post" asp-page-handler="UpdateCompletion" class="pt-2">
-                                    <input type="hidden" asp-for="@task.Id" name="taskId" />
-                                    <button type="submit" name="Completion" id="Completion" class="btn btn-outline-light">
-                                        @(task.Completion != 0 ? "Completed" : "Not Completed")
-                                    </button>
-                                </form>
-                            </div>
+                            }
+                            <form method="post" asp-page-handler="UpdateCompletion" class="pt-2">
+                                <input type="hidden" asp-for="@task.Id" name="taskId" />
+                                <button type="submit" name="Completion" id="Completion" class="btn btn-outline-light">
+                                    @(task.Completion != 0 ? "Completed" : "Not Completed")
+                                </button>
+                            </form>
                         </div>
                     </div>
                 }
