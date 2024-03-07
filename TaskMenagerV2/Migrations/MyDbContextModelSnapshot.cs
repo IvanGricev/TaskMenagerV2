@@ -53,7 +53,11 @@ namespace TaskMenagerV2.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("CompletionDate")
+                    b.Property<int>("Completion")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompletionDate")
                         .IsRequired()
                         .HasColumnType("longtext");
 

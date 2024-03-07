@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TaskMenager.Components.dbcontroll;
 
@@ -48,6 +48,14 @@ namespace TaskMenagerV2.Pages
             }
             else if (Action == "AddTask")
             {
+                // Проверяем, что дата выполнения задачи не раньше сегодняшней даты
+                if (newTask.DateOfCompletion.Date < DateTime.Today)
+                {
+                    // Если дата выполнения раньше сегодняшней, добавляем ошибку в ModelState
+                    ModelState.AddModelError("newTask.DateOfCompletion", "Date is not valid");
+                    return Page();
+                }
+
                 _dbContext.Tasks.Add(newTask);
                 Console.WriteLine($"Task: {newTask.ProjectId}, {newTask.DateOfCreation}, {newTask.Description}");
                 await _dbContext.SaveChangesAsync();

@@ -12,8 +12,8 @@
 }
 <div class="container">
     <div class="pt-3 pb-3">
+        <h2>Today's and upcomming tasks:</h2>
         <div class="container">
-            <h2>Today's and upcomming tasks</h2>
             @foreach (var task in DbContext.Tasks)
             {
                 if (task.DateOfCreation.Date <= DateTime.Today)
@@ -32,13 +32,26 @@
                                         <div>From project: @project.Name</div>
                                     }
                                 }
+                                @if (task.Completion != 0)
+                                {
+                                    <div class="">Completed</div>
+                                }
+                                <form method="post" asp-page-handler="UpdateCompletion">
+                                    <input type="hidden" asp-for="@task.Id" name="taskId" />
+                                    <button type="submit" name="Completion" id="Completion" class="btn btn-primary">
+                                        @(task.Completion != 0 ? "Completed" : "Not Completed")
+                                    </button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
                 }
             }
+        </div>
 
-            <h2>Past tasks:</h2>
+        <h2>Past tasks:</h2>
+        <div class="container">
             @foreach (var task in DbContext.Tasks)
             {
                 if (task.DateOfCreation.Date < DateTime.Today)
@@ -46,31 +59,53 @@
                     var color = colors[rand.Next(colors.Length)];
 
                     <div class="row mb-4">
-                        <div class="col-md-4 mb-3 d-flex flex-column justify-content-start">
-                            <div class="card border border-3 rounded-5 text-white bg-@color h-100 d-flex flex-column justify-content-between p-3 shadow-sm">
-                                <div>@task.Description</div>
-                                <div>@task.DateOfCreation</div>
-                                @foreach (var project in projects.Values)
+                        <div class="card border border-3 rounded-5 text-white bg-@color h-100 d-flex flex-column justify-content-between p-3 shadow-sm">
+                            <div>@task.Description</div>
+                            <div>@task.DateOfCreation</div>
+                            @foreach (var project in projects.Values)
+                            {
+                                if (project.ProjectId == task.ProjectId && task.ProjectId != 0)
                                 {
-                                    if (project.ProjectId == task.ProjectId && task.ProjectId != 0)
-                                    {
-                                        <div>From project: @project.Name</div>
-                                    }
+                                    <div>From project: @project.Name</div>
                                 }
-                            </div>
+                            }
+                            <form method="post" asp-page-handler="UpdateCompletion">
+                                <input type="hidden" asp-for="@task.Id" name="taskId" />
+                                <button type="submit" name="Completion" id="Completion" class="btn btn-primary">
+                                    @(task.Completion != 0 ? "Completed" : "Not Completed")
+                                </button>
+                            </form>
                         </div>
                     </div>
                 }
             }
         </div>
     </div>
+
     <div class="pt-3 pb-3 container">
         <h2>Projects</h2>
-        <div>
+        <div class="container">
             @foreach (var project in projects.Values)
             {
                 if (project.ProjectId != 0)
                 {
+                    //logic
+
+                    double completed = 0;
+                    double ammount = 0;
+                    foreach (var task in project.Tasks)
+                    {
+                        if(task.Completion == 1)
+                        {
+                            completed+=1;
+                        }
+                        ammount+=1;
+                    }
+
+                    int PercentCompletion = Convert.ToInt32( (completed / ammount) * 100);//blyat
+                    Console.WriteLine($"ammount: {ammount}, completed: {completed}, PercentCompletion: {PercentCompletion}");
+
+                    //logic
                     var color = colors[rand.Next(colors.Length)];
 
                     <div class="row mb-4">
@@ -81,6 +116,9 @@
                                 <div>
                                     <p>Project: @project.Name</p>
                                 </div>
+
+                                <div><progress max="100" value="@PercentCompletion"></progress>  @PercentCompletion%</div>
+
                             </div>
                         </div>
                     </div>

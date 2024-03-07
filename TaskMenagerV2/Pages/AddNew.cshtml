@@ -27,7 +27,7 @@
             <button type="submit" class="btn btn-primary">Add</button>
         </form>
 
-        <h3 class="pt-4">Task</h3>
+        <h3 class="pt-4">Task</h3> 
         <form method="post">
             <input type="hidden" asp-for="Action" value="AddTask" />
             <input type="hidden" asp-for="newTask.DateOfCreation" value="@DateTime.Now" />
@@ -38,6 +38,10 @@
             <div class="form-group pt-3 pb-3">
                 <label asp-for="newTask.Description"></label>
                 <input asp-for="newTask.Description" class="form-control  w-50" />
+            </div>
+            <div class="form-group pt-3 pb-3">
+                <label asp-for="newTask.DateOfCompletion"></label>
+                <input asp-for="newTask.DateOfCompletion" type="date" class="form-control w-50" />
             </div>
             <button type="submit" class="btn btn-primary">Add</button>
         </form>
