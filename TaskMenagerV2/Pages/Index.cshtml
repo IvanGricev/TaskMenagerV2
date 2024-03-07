@@ -7,8 +7,9 @@
 @{
     ViewData["Title"] = "Home page";
     var projects = DbContext.Projects.ToDictionary(p => p.ProjectId, p => p);
-    var colors = new string[] { "primary", "secondary", "success", "danger", "warning", "info", "dark" };
+    var colors = new string[] { "secondary", "success", "danger", "warning", "info", "dark" };
     Random rand = new Random();
+    var color = colors[0];
 }
 
 <div class="container">
@@ -19,21 +20,34 @@
             {
                 if (task.DateOfCompletion.Date >= DateTime.Today)
                 {
-                    var color = colors[rand.Next(colors.Length)];
-
                     <div class="row mb-4">
+
+                        @if(task.ProjectId == 0)
+                        {
+                            color = colors[rand.Next(colors.Length)];
+                        }
+                        else
+                        {
+                            @if (task.ProjectId > colors.Length)
+                            {
+                                color = colors[task.ProjectId - colors.Length];
+                            }
+                            else
+                            {
+                                color = colors[task.ProjectId];
+                            }
+                        }
                         <div class="col-md-4 mb-3 d-flex flex-column justify-content-start">
                             <div class="card border border-3 rounded-5 text-white bg-@color h-100 w-75 d-flex flex-column justify-content-between p-3 shadow-sm">
                                 <div>@task.Description</div>
                                 <div class="pt-2">@task.DateOfCreation</div>
                                 @foreach (var project in projects.Values)
                                 {
-                                    if (project.ProjectId == task.ProjectId && task.ProjectId != 0)
+                                    @if (project.ProjectId == task.ProjectId && task.ProjectId != 0)
                                     {
                                         <div class="pt-2">From project: @project.Name</div>
                                     }
                                 }
-
                                 <form method="post" asp-page-handler="UpdateCompletion" class="pt-2">
                                     <input type="hidden" asp-for="@task.Id" name="taskId" />
                                     <button type="submit" name="Completion" id="Completion" class="btn btn-outline-light">
@@ -47,16 +61,16 @@
             }
         </div>
 
-        <h2 class="pt-4">Past tasks:</h2>
+        <h2 class="pt-4">Outdated tasks:</h2>
         <div class="container">
             @foreach (var task in DbContext.Tasks)
             {
                 if (task.DateOfCompletion.Date < DateTime.Today && task.Completion == 0)
                 {
-                    var color = colors[rand.Next(colors.Length)];
+                    color = colors[rand.Next(colors.Length)];
 
                     <div class="row mb-4">
-                        <div class="card border border-3 rounded-5 text-white bg-@color h-100 w-75 d-flex flex-column justify-content-between p-3 shadow-sm">
+                        <div class="card border border-3 rounded-5 text-white bg-dark h-100 w-75 d-flex flex-column justify-content-between p-3 shadow-sm">
                             <div>@task.Description</div>
                             <div class="pt-2">@task.DateOfCreation</div>
                             @foreach (var project in projects.Values)
@@ -77,6 +91,43 @@
                 }
             }
         </div>
+
+        <button id="toggleButton" class="btn btn-outline-secondary mt-4">Show Completed</button>
+
+        <div id="completedTasks" style="display: none;">
+            <h2 class="pt-4">Completed tasks:</h2>
+            <div class="container">
+                @foreach (var task in DbContext.Tasks)
+                {
+                    if (task.DateOfCompletion.Date < DateTime.Today && task.Completion == 1)
+                    {
+                        color = colors[rand.Next(colors.Length)];
+
+                        <div class="row mb-4">
+                            <div class="card border border-3 rounded-5 text-white bg-dark h-100 w-75 d-flex flex-column justify-content-between p-3 shadow-sm">
+                                <div>@task.Description</div>
+                                <div class="pt-2">@task.DateOfCreation</div>
+                                @foreach (var project in projects.Values)
+                                {
+                                    if (project.ProjectId == task.ProjectId && task.ProjectId != 0)
+                                    {
+                                        <div class="pt-2">From project: @project.Name</div>
+                                    }
+                                }
+                                <form method="post" asp-page-handler="UpdateCompletion" class="pt-2">
+                                    <input type="hidden" asp-for="@task.Id" name="taskId" />
+                                    <button type="submit" name="Completion" id="Completion" class="btn btn-outline-light">
+                                        @(task.Completion != 0 ? "Completed" : "Not Completed")
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+
     </div>
 
     <div class="pt-4 pb-3 container">
@@ -100,16 +151,26 @@
                     int PercentCompletion = Convert.ToInt32( (completed / ammount) * 100);
                     Console.WriteLine($"ammount: {ammount}, completed: {completed}, PercentCompletion: {PercentCompletion}");
 
-                    var color = colors[rand.Next(colors.Length)];
+                    
+                    color = colors[rand.Next(colors.Length)];
+
+                    if (project.ProjectId != 0)
+                    {
+                        if (project.ProjectId > color.Length)
+                        {
+                            color = colors[project.ProjectId - color.Length];
+                        }
+                        else
+                        {
+                            color = colors[project.ProjectId];
+                        }
+                    }
 
                     <div class="row mb-4">
                         <div class="col-md-4 mb-3 d-flex flex-column justify-content-start">
                             <div class="card border border-3 rounded-5 text-white bg-@color h-100 d-flex flex-column justify-content-between p-3 shadow-sm w-100">
                                 <div>@project.Name</div>
                                 <div class="pt-2">@project.Description</div>
-                                <div class="pt-2">
-                                    <p>Project: @project.Name</p>
-                                </div>
                                 <div class="pt-2"><progress max="100" value="@PercentCompletion"></progress>  @PercentCompletion%</div>
                             </div>
                         </div>
@@ -119,3 +180,15 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#toggleButton").click(function () {
+                $("#completedTasks").toggle();
+                var text = $("#toggleButton").text();
+                $("#toggleButton").text(text == "Show Completed" ? "Hide Completed" : "Show Completed");
+            });
+        });
+    </script>
+}
