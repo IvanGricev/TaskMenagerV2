@@ -30,6 +30,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Edit">Edit</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Achievements">Achievements</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
@@ -80,7 +83,7 @@
         }
 
         body.dark-mode .navbar .nav-link {
-        color: #e0e0e0;
+        color: #ffffff;
         }
         
         body.dark-mode .footer {
@@ -92,7 +95,7 @@
     <script>
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme) {
-            document.body.classList.toggle(currentTheme);
+            document.body.classList.add(currentTheme);
             document.getElementById('themeSwitch').checked = currentTheme === 'dark-mode';
         }
 

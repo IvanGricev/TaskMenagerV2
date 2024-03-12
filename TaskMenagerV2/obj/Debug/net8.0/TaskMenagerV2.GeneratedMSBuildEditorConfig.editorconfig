@@ -18,6 +18,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\xampp\htdocs\TaskMenagerV2\TaskMenagerV2
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/xampp/htdocs/TaskMenagerV2/TaskMenagerV2/Pages/Achievements.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNoaWV2ZW1lbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/xampp/htdocs/TaskMenagerV2/TaskMenagerV2/Pages/AddNew.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkTmV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

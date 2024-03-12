@@ -49,10 +49,8 @@ namespace TaskMenagerV2.Pages
             }
             else if (Action == "AddTask")
             {
-                // Проверяем, что дата выполнения задачи не раньше сегодняшней даты
                 if (newTask.DateOfCompletion.Date < DateTime.Today)
                 {
-                    // Если дата выполнения раньше сегодняшней, добавляем ошибку в ModelState
                     ModelState.AddModelError("newTask.DateOfCompletion", "Date is not valid");
                     return Page();
                 }

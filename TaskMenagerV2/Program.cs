@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskMenager.Components.services;
 using TaskMenager.Components.Services;
+using TaskMenagerV2.Pages.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,7 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITaskService, Taskservice>();
-
+builder.Services.AddScoped<IAchievementsService, AchievementsService>();
 
 
 var app = builder.Build();

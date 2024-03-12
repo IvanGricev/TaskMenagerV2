@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using TaskMenager.Components.dbcontroll;
+using TaskMenagerV2.Pages.dbcontroll;
 
 public class MyDbContext : DbContext
 {
@@ -32,6 +33,8 @@ public class MyDbContext : DbContext
     }
     public DbSet<Tasks> Tasks { get; set; }
     public DbSet<Project> Projects { get; set; }
+
+    public DbSet<Achievements> Achievements { get; set; }
     //new
     public MyDbContext(DbContextOptions<DbContext> options) : base(options)
     {

@@ -55,7 +55,12 @@
                             <input type="hidden" asp-for="editTask.Id" value="@task.Id" />
                             <div class="form-group pt-3">
                                 <label asp-for="editTask.ProjectId"></label>
-                                <input asp-for="editTask.ProjectId" class="form-control  w-50" value="@task.ProjectId" />
+                                <select asp-for="editTask.ProjectId" class="form-select w-50">
+                                    @foreach (var projects in DbContext.Projects)
+                                    {
+                                        <option value="@projects.ProjectId">@projects.Name</option>
+                                    }
+                                </select>
                             </div>
                             <div class="form-group pt-3 pb-3">
                                 <label asp-for="editTask.Description"></label>
