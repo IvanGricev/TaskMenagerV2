@@ -5,7 +5,8 @@
 @using TaskMenager.Components.Services;
 @model TaskMenagerV2.Pages.AchievementsModel
 @{
-	ViewData["Title"] = "Home Achievements";
+    ViewData["Title"] = "Home Achievements";
+    int counter = 0;
 }
 
 <div class="container">
@@ -17,7 +18,9 @@
                 {
                     if(achievement.Completed == 1)
                     {
-                        <div class="col-md-4">
+                        counter++;
+
+                        <div class="col-md-4 pt-2">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">@achievement.Name</h5>
@@ -26,6 +29,11 @@
                             </div>
                         </div>
                     }
+
+                }
+                @if(counter == 0)
+                {
+                <div class="h4">No completed achievements.</div>
                 }
             </div>
 
@@ -35,7 +43,7 @@
                 {
                     if(achievement.Completed == 0)
                     {
-                        <div class="col-md-4">
+                        <div class="col-md-4 pt-2">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">@achievement.Name</h5>
