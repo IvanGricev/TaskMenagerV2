@@ -33,6 +33,7 @@ namespace TaskMenagerV2.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             Console.WriteLine($"Action: {Action}");
+            //fix this
             //if (!ModelState.IsValid)
             //{
             //    Console.WriteLine("Model is not valid!");
