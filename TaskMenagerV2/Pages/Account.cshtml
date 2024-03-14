@@ -1,0 +1,145 @@
+﻿@page
+@model TaskMenagerV2.Pages.AccountModel
+@inject MyDbContext DbContext
+@using TaskMenager.Components.dbcontroll;
+@using Microsoft.EntityFrameworkCore;
+@using TaskMenagerV2.Pages.Services
+@using TaskMenagerV2.Pages.dbcontroll;
+@{
+    ViewData["Title"] = "Account";
+    int counter = 0;
+    var taskss = DbContext.Tasks.ToList();
+    var projectss = DbContext.Projects.ToList();
+}
+
+<div class="container">
+    <div class="text-center tp-4">
+        <h2 class="display-4">Welcome!</h2>
+        @if (HttpContext.Session.GetString("UserId") != null)
+        {
+            var user = ViewData["User"] as User;
+            <p class="tp-2">@user.Name!</p>
+            <p class="tp-2">Your email: @user.Email</p>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h2>Completed Achievements</h2>
+                    <div class="row">
+                        @foreach (var achievement in DbContext.Achievements)
+                        {
+                            if (achievement.Completed == 1)
+                            {
+                                counter++;
+
+                                <div class="col-md-4 pt-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@achievement.Name</h5>
+                                            <p class="card-text">@achievement.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        @if (counter == 0)
+                        {
+                            <div class="h4">No completed achievements.</div>
+                        }
+                    </div>
+
+                    <h2>Incompleted Achievements</h2>
+                    <div class="row">
+                        @foreach (var achievement in DbContext.Achievements)
+                        {
+                            if (achievement.Completed == 0)
+                            {
+                                <div class="col-md-4 pt-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@achievement.Name</h5>
+                                            <p class="card-text">@achievement.Description</p>
+                                            @switch (achievement.Id)
+                                            {
+                                                case 4:
+                                                    double completed = 0;
+                                                    @foreach (var task in taskss)
+                                                    {
+                                                        if (task.Completion == 1)
+                                                        {
+                                                            completed += 1;
+                                                        }
+                                                    }
+                                                    int PercentCompletion = Convert.ToInt32((completed / 10) * 100);
+                                                    <div class="pt-2"><progress max="100" value="@PercentCompletion"></progress>  @PercentCompletion%</div>
+
+                                                    break;
+                                                case 5:
+                                                    completed = 0;
+                                                    @foreach (var task in taskss)
+                                                    {
+                                                        if (task.Completion == 1)
+                                                        {
+                                                            completed += 1;
+                                                        }
+                                                    }
+                                                    PercentCompletion = Convert.ToInt32((completed / 50) * 100);
+                                                    <div class="pt-2"><progress max="100" value="@PercentCompletion"></progress>  @PercentCompletion%</div>
+                                                    break;
+                                                case 6:
+                                                    completed = 0;
+                                                    @foreach (var task in taskss)
+                                                    {
+                                                        if (task.Completion == 1)
+                                                        {
+                                                            completed += 1;
+                                                        }
+                                                    }
+                                                    PercentCompletion = Convert.ToInt32((completed / 100) * 100);
+                                                    <div class="pt-2"><progress max="100" value="@PercentCompletion"></progress>  @PercentCompletion%</div>
+                                                    break;
+                                                case 9:
+                                                    completed = 0;
+                                                    int count = 0;
+                                                    int completedP = 0;
+                                                    foreach (var project in projectss)
+                                                    {
+                                                        count = 0;
+                                                        completed = 0;
+                                                        foreach (var task in project.Tasks)
+                                                        {
+                                                            if (task.Completion == 1)
+                                                            {
+                                                                completed++;
+                                                            }
+                                                            count++;
+                                                        }
+                                                        if (count == completed)
+                                                        {
+                                                            completedP++;
+                                                        }
+                                                    }
+
+                                                    PercentCompletion = Convert.ToInt32((completedP / 10) * 100);
+                                                    <div class="pt-2"><progress max="100" value="@PercentCompletion"></progress>  @PercentCompletion%</div>
+                                                    break;
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <p>Please log in or register.</p>
+            <a class="btn text-dark" asp-area="" asp-page="/Login">Log in</a>
+            <a class="btn text-dark" asp-area="" asp-page="/Registration">Register</a>
+        }
+    </div>
+</div>
+

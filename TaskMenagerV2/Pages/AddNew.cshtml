@@ -3,54 +3,65 @@
 @using TaskMenager.Components.dbcontroll;
 @using Microsoft.EntityFrameworkCore;
 @using TaskMenager.Components.Services;
-
+@using TaskMenagerV2.Pages.Services
+@using TaskMenagerV2.Pages.dbcontroll;
 @model TaskMenagerV2.Pages.AddNewModel
 @{
     ViewData["Title"] = "Add New";
 }
 
 <div class="container">
-    <h2>Add New</h2>
+    @if (HttpContext.Session.GetString("UserId") != null)
+    {
 
-    <div class="container">
-        <h3>Project</h3>
-        <form method="post">
-            <input type="hidden" asp-for="Action" value="AddProject" />
-            <div class="form-group pt-3">
-                <label asp-for="newProject.Name"></label>
-                <input asp-for="newProject.Name" class="form-control  w-50" />
-            </div>
-            <div class="form-group pt-3 pb-3">
-                <label asp-for="newProject.Description"></label>
-                <input asp-for="newProject.Description" class="form-control  w-50" />
-            </div>
-            <button type="submit" class="btn btn-primary">Add</button>
-        </form>
+        <h2>Add New</h2>
 
-        <h3 class="pt-4">Task</h3> 
-        <form method="post">
-            <input type="hidden" asp-for="Action" value="AddTask" />
-            <input type="hidden" asp-for="newTask.DateOfCreation" value="@DateTime.Now" />
-            <div class="form-group pt-3">
-                <label asp-for="newTask.ProjectId"></label>
-                <select asp-for="newTask.ProjectId" class="form-select w-50">
-                @foreach (var project in DbContext.Projects)
-                {
-                        <option value="@project.ProjectId">@project.Name</option>
-                }
-                </select>
+        <div class="container">
+            <h3>Project</h3>
+            <form method="post">
+                <input type="hidden" asp-for="Action" value="AddProject" />
+                <input type="hidden" asp-for="newProject.UserId" value="@HttpContext.Session.GetString("UserId")" />
+                <div class="form-group pt-3">
+                    <label asp-for="newProject.Name"></label>
+                    <input asp-for="newProject.Name" class="form-control  w-50" />
+                </div>
+                <div class="form-group pt-3 pb-3">
+                    <label asp-for="newProject.Description"></label>
+                    <input asp-for="newProject.Description" class="form-control  w-50" />
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
 
-
-            </div>
-            <div class="form-group pt-3 pb-3">
-                <label asp-for="newTask.Description"></label>
-                <input asp-for="newTask.Description" class="form-control  w-50" />
-            </div>
-            <div class="form-group pt-3 pb-3">
-                <label asp-for="newTask.DateOfCompletion"></label>
-                <input asp-for="newTask.DateOfCompletion" type="date" class="form-control w-50" value="@DateTime.Today"/>
-            </div>
-            <button type="submit" class="btn btn-primary">Add</button>
-        </form>
-    </div>
+            <h3 class="pt-4">Task</h3>
+            <form method="post">
+                <input type="hidden" asp-for="Action" value="AddTask" />
+                <input type="hidden" asp-for="newTask.DateOfCreation" value="@DateTime.Now" />
+                <input type="hidden" asp-for="newTask.UserId" value="@HttpContext.Session.GetString("UserId")" />
+                <div class="form-group pt-3">
+                    <label asp-for="newTask.ProjectId"></label>
+                    <select asp-for="newTask.ProjectId" class="form-select w-50">
+                        @foreach (var project in DbContext.Projects)
+                        {
+                            <option value="@project.ProjectId">@project.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group pt-3 pb-3">
+                    <label asp-for="newTask.Description"></label>
+                    <input asp-for="newTask.Description" class="form-control  w-50" />
+                </div>
+                <div class="form-group pt-3 pb-3">
+                    <label asp-for="newTask.DateOfCompletion"></label>
+                    <input asp-for="newTask.DateOfCompletion" type="date" class="form-control w-50" value="@DateTime.Today" />
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <p>Please log in or register.</p>
+        <a class="btn text-dark" asp-area="" asp-page="/Login">Log in</a>
+        <a class="btn text-dark" asp-area="" asp-page="/Registration">Register</a>
+    }
 </div>

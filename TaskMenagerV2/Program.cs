@@ -15,9 +15,34 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITaskService, Taskservice>();
 builder.Services.AddScoped<IAchievementsService, AchievementsService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddDistributedMemoryCache(); // Используйте другой кэш, если это необходимо
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+// Добавление MVC и других сервисов
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Использование сессий
+app.UseSession();
+
+// Остальная конфигурация
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

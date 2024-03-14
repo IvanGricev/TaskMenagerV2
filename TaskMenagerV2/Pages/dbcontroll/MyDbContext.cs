@@ -33,9 +33,8 @@ public class MyDbContext : DbContext
     }
     public DbSet<Tasks> Tasks { get; set; }
     public DbSet<Project> Projects { get; set; }
-
     public DbSet<Achievements> Achievements { get; set; }
-    //new
+    public DbSet<User> Users { get; set; }
     public MyDbContext(DbContextOptions<DbContext> options) : base(options)
     {
     }

@@ -9,7 +9,10 @@ namespace TaskMenager.Components.dbcontroll
         
         [BindProperty]
         public int ProjectId { get; set; }
-        
+
+        [BindProperty]
+        public int UserId { get; set; }
+
         [BindProperty]
         public string Description { get; set; }
 
