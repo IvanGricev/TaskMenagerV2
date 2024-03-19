@@ -22,20 +22,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-body-secondary" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/AddNew">Add new</a>
+                            <a class="nav-link text-body-secondary" asp-area="" asp-page="/AddNew">Add new</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Edit">Edit</a>
+                            <a class="nav-link text-body-secondary" asp-area="" asp-page="/Edit">Edit</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-body-secondary" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
                     <div class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Account">Account</a>
+                        <a class="nav-link text-body-secondary" asp-area="" asp-page="/Account">Account</a>
                     </div>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="themeSwitch" onclick="switchTheme()">
@@ -87,6 +87,9 @@
         color: #ffffff;
         }
 
+        .text-body-secondary{
+
+        }
         
         /*achivements cards*/
 
@@ -113,6 +116,13 @@
             background-color: #333; /* Background color for progress bar container */
         }
 
+        .text-body-secondary {
+            color: black !important;
+        }
+
+        body.dark-mode .text-body-secondary {
+            color: #e0e0e0 !important;
+        }
     </style>
     
     <script>

@@ -50,38 +50,41 @@
                         <p>Cannot delete project with tasks.</p>
                     }
 
-
-                    @if (project.Tasks.Count != 0)
-                    {
-                        @foreach (var task in project.Tasks)
+                    <button onclick="toggleTasksVisibility()" class="btn btn-secondary">Show tasks</button>
+                    <div id="tasksContainer" style="display: none;">
+                        @if (project.Tasks.Count != 0)
                         {
-                            <h3 class="pt-4">Task: @task.Description</h3>
-                            <form method="post">
-                                <input type="hidden" asp-for="Action" value="EditTask" />
-                                <input type="hidden" asp-for="editTask.Id" value="@task.Id" />
-                                <div class="form-group pt-3">
-                                    <label asp-for="editTask.ProjectId"></label>
-                                    <select asp-for="editTask.ProjectId" class="form-select w-50">
-                                        @foreach (var projects in DbContext.Projects)
-                                        {
-                                            <option value="@projects.ProjectId">@projects.Name</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="form-group pt-3 pb-3">
-                                    <label asp-for="editTask.Description"></label>
-                                    <input asp-for="editTask.Description" class="form-control  w-50" value="@task.Description" />
-                                </div>
-                                <button type="submit" class="btn btn-primary">Edit</button>
-                            </form>
+                            @foreach (var task in project.Tasks)
+                            {
+                                <h3 class="pt-4">Task: @task.Description</h3>
+                                <form method="post">
+                                    <input type="hidden" asp-for="Action" value="EditTask" />
+                                    <input type="hidden" asp-for="editTask.Id" value="@task.Id" />
+                                    <div class="form-group pt-3">
+                                        <label asp-for="editTask.ProjectId"></label>
+                                        <select asp-for="editTask.ProjectId" class="form-select w-50">
+                                            @foreach (var projects in DbContext.Projects)
+                                            {
+                                                <option value="@projects.ProjectId">@projects.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group pt-3 pb-3">
+                                        <label asp-for="editTask.Description"></label>
+                                        <input asp-for="editTask.Description" class="form-control  w-50" value="@task.Description" />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                </form>
 
-                            <form method="post" class="pt-2">
-                                <input type="hidden" asp-for="Action" value="DeleteTask" />
-                                <input type="hidden" asp-for="editTask.Id" value="@task.Id" />
-                                <button type="submit" class="btn btn-danger">Delete Task</button>
-                            </form>
+                                <form method="post" class="pt-2">
+                                    <input type="hidden" asp-for="Action" value="DeleteTask" />
+                                    <input type="hidden" asp-for="editTask.Id" value="@task.Id" />
+                                    <button type="submit" class="btn btn-danger">Delete Task</button>
+                                </form>
+                            }
                         }
-                    }
+                    </div>
+
                     <hr style="border-top: 3px solid #000;" />
                 </div>
             }
@@ -90,8 +93,18 @@
     else
     {
         <p>Please log in or register.</p>
-        <a class="btn text-dark" asp-area="" asp-page="/Login">Log in</a>
-        <a class="btn text-dark" asp-area="" asp-page="/Registration">Register</a>
+        <a class="btn text-body-secondary" asp-area="" asp-page="/Login">Log in</a>
+        <a class="btn text-body-secondary" asp-area="" asp-page="/Registration">Register</a>
     }
-
 </div>
+
+<script>
+    function toggleTasksVisibility() {
+        var tasksContainer = document.getElementById('tasksContainer');
+        if (tasksContainer.style.display === 'none') {
+            tasksContainer.style.display = 'block';
+        } else {
+            tasksContainer.style.display = 'none';
+        }
+    }
+</script>
