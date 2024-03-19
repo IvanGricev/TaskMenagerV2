@@ -86,30 +86,33 @@
         body.dark-mode .navbar .nav-link {
         color: #ffffff;
         }
+
         
         /*achivements cards*/
+
         body.dark-mode .footer {
         background-color: #333;
         color: #e0e0e0;
         }
 
-            body.dark-mode .card {
-                background-color: #333; /* Darker background for cards */
-                color: #e0e0e0; /* Light text for better contrast */
-            }
+        body.dark-mode .card {
+            background-color: #333; /* Darker background for cards */
+            color: #e0e0e0; /* Light text for better contrast */
+        }
 
-            body.dark-mode .card-title,
-            body.dark-mode .card-text {
-                color: #e0e0e0; /* Ensure text is readable in dark mode */
-            }
+        body.dark-mode .card-title,
+        body.dark-mode .card-text {
+            color: #e0e0e0; /* Ensure text is readable in dark mode */
+        }
 
-            body.dark-mode .progress-bar {
-                background-color: #e0e0e0; /* Progress bar color */
-            }
+        body.dark-mode .progress-bar {
+            background-color: #e0e0e0; /* Progress bar color */
+        }
 
-            body.dark-mode .progress {
-                background-color: #333; /* Background color for progress bar container */
-            }
+        body.dark-mode .progress {
+            background-color: #333; /* Background color for progress bar container */
+        }
+
     </style>
     
     <script>
@@ -126,8 +129,10 @@
             if (document.body.classList.contains('dark-mode')) {
                 theme = 'dark-mode';
             }
+
             localStorage.setItem('theme', theme);
         }
+
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
