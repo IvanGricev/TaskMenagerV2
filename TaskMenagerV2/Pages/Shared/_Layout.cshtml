@@ -30,9 +30,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Edit">Edit</a>
                         </li>
-                        @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Achievements">Achievements</a>
-                        </li> *@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
@@ -90,10 +87,29 @@
         color: #ffffff;
         }
         
+        /*achivements cards*/
         body.dark-mode .footer {
         background-color: #333;
         color: #e0e0e0;
         }
+
+            body.dark-mode .card {
+                background-color: #333; /* Darker background for cards */
+                color: #e0e0e0; /* Light text for better contrast */
+            }
+
+            body.dark-mode .card-title,
+            body.dark-mode .card-text {
+                color: #e0e0e0; /* Ensure text is readable in dark mode */
+            }
+
+            body.dark-mode .progress-bar {
+                background-color: #e0e0e0; /* Progress bar color */
+            }
+
+            body.dark-mode .progress {
+                background-color: #333; /* Background color for progress bar container */
+            }
     </style>
     
     <script>

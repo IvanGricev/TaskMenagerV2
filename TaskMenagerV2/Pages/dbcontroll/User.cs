@@ -21,5 +21,9 @@ namespace TaskMenagerV2.Pages.dbcontroll
         
         [BindProperty]
         public string Email { get; set; }
+        
+        [BindProperty]
+        public string Achivements { get; set; }
+
     }
 }
