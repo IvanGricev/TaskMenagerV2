@@ -17,7 +17,7 @@ builder.Services.AddScoped<ITaskService, Taskservice>();
 builder.Services.AddScoped<IAchievementsService, AchievementsService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddDistributedMemoryCache(); // Используйте другой кэш, если это необходимо
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);

@@ -20,6 +20,12 @@ namespace TaskMenagerV2.Pages
             _dbContext = dbContext;
         }
 
+        public async Task<IActionResult> OnPostLogoutAsync()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToPage("/Account");
+        }
+
         public async Task<IActionResult> OnGetAsync()
         {
             if (HttpContext.Session.GetString("UserId") != null)

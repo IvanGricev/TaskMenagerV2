@@ -20,7 +20,11 @@
             <p class="tp-2">@user.Name!</p>
             <p class="tp-2">Your email: @user.Email</p>
 
-            <div class="row justify-content-center">
+            <form method="post" asp-page-handler="Logout" class="pt-2 pb-3">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+            
+            <div class="row justify-content-center pb-3">
                 <div class="col-md-8">
                     <h2>Completed Achievements</h2>
                     <div class="row">
@@ -31,7 +35,7 @@
                                 var achievement = DbContext.Achievements.FirstOrDefault(a => a.Id == i + 1);
                                 if (achievement != null)
                                 {
-                                    <div class="col-md-4 pt-2">
+                                    <div class="col-md-4 pt-2 pb-2">
                                         <div class="card">
                                             <div class="card-body">
                                                 <h5 class="card-title">@achievement.Name</h5>
@@ -48,7 +52,7 @@
                         }
                     </div>
 
-                    <h2>Incompleted Achievements</h2>
+                    <h2 class="pt-3">Incompleted Achievements</h2>
                     <div class="row">
                         @for (int i = 0; i < achievementsList.Count; i++)
                         {
@@ -57,7 +61,7 @@
                                 var achievement = DbContext.Achievements.FirstOrDefault(a => a.Id == i + 1);
                                 if (achievement != null)
                                 {
-                                    <div class="col-md-4 pt-2">
+                                    <div class="col-md-4 pt-2 pb-2">
                                         <div class="card">
                                             <div class="card-body">
                                                 <h5 class="card-title">@achievement.Name</h5>
