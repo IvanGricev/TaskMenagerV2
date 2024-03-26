@@ -23,7 +23,7 @@ namespace TaskMenagerV2.Pages.dbcontroll
         public string Email { get; set; }
         
         [BindProperty]
-        public string Achivements { get; set; }
+        public string Achivements { get; set; } = "0,0,0,0,0,0,0,0,0,0,1,0";
 
     }
 }

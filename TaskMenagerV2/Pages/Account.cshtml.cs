@@ -47,7 +47,7 @@ namespace TaskMenagerV2.Pages
                         switch (i + 1)
                         {
                             case 1:
-                                foreach (var task in tasks)
+                                foreach (var task in tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     if (task.Completion == 1 && task.DateOfCreation == DateTime.Today)
                                     {
@@ -58,7 +58,7 @@ namespace TaskMenagerV2.Pages
                                 break;
 
                             case 2:
-                                foreach (var task in tasks)
+                                foreach (var task in tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     if (task.Completion == 1)
                                     {
@@ -69,7 +69,7 @@ namespace TaskMenagerV2.Pages
                                 break;
 
                             case 3:
-                                foreach (var project in projects)
+                                foreach (var project in projects.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     if (project.ProjectId >= 0)
                                     {
@@ -81,7 +81,7 @@ namespace TaskMenagerV2.Pages
 
                             case 4:
                                 int counter = 0;
-                                foreach (var task in tasks)
+                                foreach (var task in tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     if (task.Completion == 1)
                                     {
@@ -97,7 +97,7 @@ namespace TaskMenagerV2.Pages
 
                             case 5:
                                 counter = 0;
-                                foreach (var task in tasks)
+                                foreach (var task in tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     if (task.Completion == 1)
                                     {
@@ -113,7 +113,7 @@ namespace TaskMenagerV2.Pages
 
                             case 6:
                                 counter = 0;
-                                foreach (var task in tasks)
+                                foreach (var task in tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     if (task.Completion == 1)
                                     {
@@ -129,7 +129,7 @@ namespace TaskMenagerV2.Pages
 
                             case 7:
                                 counter = 0;
-                                foreach (var project in projects)
+                                foreach (var project in projects.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     foreach (var task in project.Tasks)
                                     {
@@ -148,7 +148,7 @@ namespace TaskMenagerV2.Pages
                                 break;
 
                             case 8:
-                                foreach (var task in tasks)
+                                foreach (var task in tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     if (task.DateOfCompletion < DateTime.Now)
                                     {
@@ -161,7 +161,7 @@ namespace TaskMenagerV2.Pages
                             case 9:
                                 counter = 0;
                                 int counterP = 0;
-                                foreach (var project in projects)
+                                foreach (var project in projects.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     foreach (var task in project.Tasks)
                                     {
@@ -184,7 +184,7 @@ namespace TaskMenagerV2.Pages
                                 break;
 
                             case 10:
-                                foreach (var task in tasks)
+                                foreach (var task in tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     var oneWeekAgo = DateTime.Now.AddDays(-7);
 
@@ -201,7 +201,7 @@ namespace TaskMenagerV2.Pages
                                 break;
 
                             case 12:
-                                foreach (var task in tasks)
+                                foreach (var task in tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
                                     if (task.Description.Length >= 1000)
                                     {

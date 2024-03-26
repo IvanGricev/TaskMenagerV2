@@ -409,3 +409,6 @@ C:\xampp\htdocs\TaskMenagerV2\TaskMenagerV2\bin\Debug\net8.0\Microsoft.AspNetCor
 C:\xampp\htdocs\TaskMenagerV2\TaskMenagerV2\bin\Debug\net8.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\xampp\htdocs\TaskMenagerV2\TaskMenagerV2\bin\Debug\net8.0\Microsoft.CodeAnalysis.Razor.dll
 C:\xampp\htdocs\TaskMenagerV2\TaskMenagerV2\obj\Debug\net8.0\TaskMenagerV2.MvcApplicationPartsAssemblyInfo.cs
+C:\xampp\htdocs\TaskMenagerV2\TaskMenagerV2\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\xampp\htdocs\TaskMenagerV2\TaskMenagerV2\bin\Debug\net8.0\MailKit.dll
+C:\xampp\htdocs\TaskMenagerV2\TaskMenagerV2\bin\Debug\net8.0\MimeKit.dll

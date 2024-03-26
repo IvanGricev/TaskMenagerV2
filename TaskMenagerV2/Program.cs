@@ -16,6 +16,8 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITaskService, Taskservice>();
 builder.Services.AddScoped<IAchievementsService, AchievementsService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddSingleton(new EmailService("smtp.yandex.ru", 465, "ivangricev@yandex.com", "zglmlrdoheigzhmk"));
+//builder.Services.AddSingleton(new EmailService("imap.yandex.ru", 993, "ivangricev@yandex.com", "zglmlrdoheigzhmk"));
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -36,12 +38,12 @@ app.UseSession();
 // Остальная конфигурация
 app.UseRouting();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-});
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//        name: "default",
+//        pattern: "{controller=Home}/{action=Index}/{id?}");
+//});
 
 
 // Configure the HTTP request pipeline.

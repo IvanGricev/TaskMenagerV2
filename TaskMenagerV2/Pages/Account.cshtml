@@ -69,27 +69,27 @@
                                                 @switch (achievement.Id)
                                                 {
                                                     case 4:
-                                                        double completed = DbContext.Tasks.Count(t => t.Completion == 1);
+                                                        double completed = DbContext.Tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))).Count(t => t.Completion == 1);
                                                         int PercentCompletion = Convert.ToInt32((completed / 10) * 100);
                                                         <div class="pt-2"><progress max="100" value="@PercentCompletion"></progress> @PercentCompletion%</div>
                                                         break;
                                                     case 5:
-                                                        completed = DbContext.Tasks.Count(t => t.Completion == 1);
+                                                        completed = DbContext.Tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))).Count(t => t.Completion == 1);
                                                         PercentCompletion = Convert.ToInt32((completed / 50) * 100);
                                                         <div class="pt-2"><progress max="100" value="@PercentCompletion"></progress> @PercentCompletion%</div>
                                                         break;
                                                     case 6:
-                                                        completed = DbContext.Tasks.Count(t => t.Completion == 1);
+                                                        completed = DbContext.Tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))).Count(t => t.Completion == 1);
                                                         PercentCompletion = Convert.ToInt32((completed / 100) * 100);
                                                         <div class="pt-2"><progress max="100" value="@PercentCompletion"></progress> @PercentCompletion%</div>
                                                         break;
                                                     case 9:
-                                                        int completedProjects = DbContext.Projects.Count(p => p.Tasks.All(t => t.Completion == 1));
+                                                        int completedProjects = DbContext.Projects.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))).Count(p => p.Tasks.All(t => t.Completion == 1));
                                                         PercentCompletion = Convert.ToInt32((completedProjects / 10) * 100);
                                                         <div class="pt-2"><progress max="100" value="@PercentCompletion"></progress> @PercentCompletion%</div>
                                                         break;
                                                     case 10:
-                                                        completed = DbContext.Tasks.Count(t => t.Completion == 1);
+                                                        completed = DbContext.Tasks.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))).Count(t => t.Completion == 1);
                                                         PercentCompletion = Convert.ToInt32((completed / 10) * 100);
                                                         <div class="pt-2"><progress max="100" value="@PercentCompletion"></progress> @PercentCompletion%</div>
                                                         break;
