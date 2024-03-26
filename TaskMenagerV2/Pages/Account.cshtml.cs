@@ -26,6 +26,20 @@ namespace TaskMenagerV2.Pages
             return RedirectToPage("/Account");
         }
 
+        public async Task<IActionResult> OnPostDeleteAccountAsync(int userId)
+        {
+            var user = await _userService.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userService.DeleteUserAsync(userId);
+            HttpContext.Session.Clear(); // Clear the session if the user is logged in
+            return RedirectToPage("/Account");
+        }
+
+
         public async Task<IActionResult> OnGetAsync()
         {
             if (HttpContext.Session.GetString("UserId") != null)
