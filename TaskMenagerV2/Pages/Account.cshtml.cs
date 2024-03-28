@@ -6,6 +6,8 @@ using TaskMenagerV2.Pages.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using TaskMenager.Components.dbcontroll;
 
 namespace TaskMenagerV2.Pages
 {
@@ -13,13 +15,31 @@ namespace TaskMenagerV2.Pages
     {
         private readonly IUserService _userService;
         private readonly MyDbContext _dbContext;
+        private readonly EmailService _emailService;
 
-        public AccountModel(IUserService userService, MyDbContext dbContext)
+        public AccountModel(IUserService userService, MyDbContext dbContext, EmailService emailService)
         {
             _userService = userService;
             _dbContext = dbContext;
+            _emailService = emailService;
         }
 
+        //password
+        [BindProperty]
+        public User UserC { get; set; }
+
+        public async Task<IActionResult> OnPostUpdatePasswordAsync(int userId)
+        {
+            var user = await _userService.GetUserByIdAsync(userId);
+
+            user.Password = UserC.Password;
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToPage("/Account");
+        }
+
+
+        //logout
         public async Task<IActionResult> OnPostLogoutAsync()
         {
             HttpContext.Session.Clear();
@@ -39,11 +59,13 @@ namespace TaskMenagerV2.Pages
             return RedirectToPage("/Account");
         }
 
-
+        //achivements
         public async Task<IActionResult> OnGetAsync()
         {
             if (HttpContext.Session.GetString("UserId") != null)
             {
+
+                //achivements
                 int userId = int.Parse(HttpContext.Session.GetString("UserId"));
                 var user = await _userService.GetUserByIdAsync(userId);
                 ViewData["User"] = user;

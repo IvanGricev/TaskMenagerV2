@@ -29,6 +29,20 @@
                 <input type="hidden" name="userId" value="@user.UserId" />
             </form>
 
+            //add here
+
+            <h2 class="pt-4">Change Password</h2>
+            <form method="post" asp-page-handler="UpdatePassword" class="pt-2 align-content-center">
+                <input type="hidden" name="userId" value="@user.UserId" />
+                <div class="form-group w-25">
+                    <label asp-for="UserC.Password"></label>
+                    <input asp-for="UserC.Password" class="form-control" />
+                    <span asp-validation-for="UserC.Password" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary pt-2">Change Password</button>
+            </form>
+
+            //
             <div class="row justify-content-center pb-3">
                 <div class="col-md-8">
                     <h2>Completed Achievements</h2>
