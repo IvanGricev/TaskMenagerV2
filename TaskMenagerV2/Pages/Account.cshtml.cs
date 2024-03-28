@@ -15,13 +15,11 @@ namespace TaskMenagerV2.Pages
     {
         private readonly IUserService _userService;
         private readonly MyDbContext _dbContext;
-        private readonly EmailService _emailService;
 
         public AccountModel(IUserService userService, MyDbContext dbContext, EmailService emailService)
         {
             _userService = userService;
             _dbContext = dbContext;
-            _emailService = emailService;
         }
 
         //password
