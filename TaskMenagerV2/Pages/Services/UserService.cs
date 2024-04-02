@@ -27,7 +27,6 @@ namespace TaskMenagerV2.Pages.Services
             }
             catch (DbUpdateException ex)
             {
-                // Логирование ошибки
                 Console.WriteLine($"Ошибка при сохранении user: {ex.Message}");
                 throw;
             }

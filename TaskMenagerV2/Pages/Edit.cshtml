@@ -14,11 +14,11 @@
 <div class="container">
     @if (HttpContext.Session.GetString("UserId") != null)
     {
-
         <h2>Edit</h2>
 
         @foreach (var project in Model.Projects.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
         {
+
             if (project.ProjectId != 0)
             {
                 <div class="container">
@@ -50,9 +50,9 @@
                         <p>Cannot delete project with tasks.</p>
                     }
 
-                    <button onclick="toggleTasksVisibility()" class="btn btn-secondary">Show tasks</button>
+                    <button onclick="toggleTasksVisibility()" class="btn btn-secondary mt-2 pb-2">Show tasks</button>
                     <div id="tasksContainer" style="display: none;">
-                        @if (project.Tasks.Count != 0)
+                        @if (project.Tasks != null)
                         {
                             @foreach (var task in project.Tasks)
                             {
@@ -82,6 +82,11 @@
                                     <button type="submit" class="btn btn-danger">Delete Task</button>
                                 </form>
                             }
+                        }
+                        else
+                        {
+                            <p>There are no tasks. Try adding new tasks:</p>
+                            <a class="nav-link text-body-secondary" asp-area="" asp-page="/AddNew">Add new</a>
                         }
                     </div>
 

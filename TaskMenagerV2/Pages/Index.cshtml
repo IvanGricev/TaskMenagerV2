@@ -142,13 +142,21 @@
                     {
                         double completed = 0;
                         double ammount = 0;
-                        foreach (var task in project.Tasks)
+                        if(project.Tasks != null)
                         {
-                            if (task.Completion == 1)
+                            foreach (var task in project.Tasks)
                             {
-                                completed += 1;
+                                if (task.Completion == 1)
+                                {
+                                    completed += 1;
+                                }
+                                ammount += 1;
                             }
-                            ammount += 1;
+                        }
+                        else
+                        {
+                            completed = 0;
+                            ammount = 1;
                         }
 
                         int PercentCompletion = Convert.ToInt32((completed / ammount) * 100);

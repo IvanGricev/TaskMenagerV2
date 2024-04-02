@@ -42,7 +42,10 @@
                     <select asp-for="newTask.ProjectId" class="form-select w-50">
                         @foreach (var project in DbContext.Projects)
                         {
-                            <option value="@project.ProjectId">@project.Name</option>
+                            if (project.UserId == Convert.ToInt32(@HttpContext.Session.GetString("UserId")))
+                            {
+                                <option value="@project.ProjectId">@project.Name</option>
+                            }
                         }
                     </select>
                 </div>

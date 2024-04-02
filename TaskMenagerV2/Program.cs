@@ -5,7 +5,6 @@ using TaskMenagerV2.Pages.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<MyDbContext>(options =>
@@ -16,8 +15,9 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITaskService, Taskservice>();
 builder.Services.AddScoped<IAchievementsService, AchievementsService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<TaskMenager.Components.services.ProjectService>();
+
 builder.Services.AddSingleton(new EmailService("smtp.yandex.ru", 465, "ivangricev@yandex.com", "zglmlrdoheigzhmk"));
-//builder.Services.AddSingleton(new EmailService("imap.yandex.ru", 993, "ivangricev@yandex.com", "zglmlrdoheigzhmk"));
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -27,23 +27,13 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-// Добавление MVC и других сервисов
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Использование сессий
 app.UseSession();
 
-// Остальная конфигурация
 app.UseRouting();
-
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapControllerRoute(
-//        name: "default",
-//        pattern: "{controller=Home}/{action=Index}/{id?}");
-//});
 
 
 // Configure the HTTP request pipeline.

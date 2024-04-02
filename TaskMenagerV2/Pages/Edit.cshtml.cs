@@ -3,16 +3,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using TaskMenager.Components.dbcontroll;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TaskMenager.Components.services;
 
 namespace TaskMenagerV2.Pages
 {
     public class EditModel : PageModel
     {
         private readonly MyDbContext _dbContext;
-
-        public EditModel(MyDbContext dbContext)
+        private readonly ProjectService _projectService;
+        public EditModel(MyDbContext dbContext, ProjectService projectService)
         {
             _dbContext = dbContext;
+            _projectService = projectService;
             editProject = new Project();
             editTask = new Tasks();
         }
@@ -57,6 +59,14 @@ namespace TaskMenagerV2.Pages
                     await _dbContext.SaveChangesAsync();
                 }
             }
+            //else if(Action == "DeleteProject")//bug
+            //{
+            //    var projectD = await _dbContext.Projects.FindAsync(editProject.ProjectId);
+            //    if (projectD != null)
+            //    {
+            //        await _projectService.DeleteProjectAsync(projectD.ProjectId);
+            //    }
+            //}
 
             return RedirectToPage("Index");
         }

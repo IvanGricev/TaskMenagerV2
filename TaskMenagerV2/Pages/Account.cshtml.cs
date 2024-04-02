@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using TaskMenagerV2.Pages.dbcontroll;
 using TaskMenagerV2.Pages.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Identity;
-using TaskMenager.Components.dbcontroll;
+
 
 namespace TaskMenagerV2.Pages
 {
@@ -15,11 +10,13 @@ namespace TaskMenagerV2.Pages
     {
         private readonly IUserService _userService;
         private readonly MyDbContext _dbContext;
+        private readonly EmailService _emailService;
 
         public AccountModel(IUserService userService, MyDbContext dbContext, EmailService emailService)
         {
             _userService = userService;
             _dbContext = dbContext;
+            _emailService = emailService;
         }
 
         //password
@@ -29,8 +26,20 @@ namespace TaskMenagerV2.Pages
         public async Task<IActionResult> OnPostUpdatePasswordAsync(int userId)
         {
             var user = await _userService.GetUserByIdAsync(userId);
-
-            user.Password = UserC.Password;
+            if(UserC.Name != null)
+            {
+                user.Name = UserC.Name;
+            }
+            if(UserC.Password != null)
+            {
+                user.Password = UserC.Password;
+            }
+            if(UserC.Email != null)
+            {
+                await _emailService.SendEmailAsync(user.Email, "Account data changing!", "You have changed your email.");
+                user.Email = UserC.Email;
+                await _emailService.SendEmailAsync(user.Email, "Account data changing!", "This is now your email.");
+            }
             await _dbContext.SaveChangesAsync();
 
             return RedirectToPage("/Account");
@@ -53,7 +62,7 @@ namespace TaskMenagerV2.Pages
             }
 
             await _userService.DeleteUserAsync(userId);
-            HttpContext.Session.Clear(); // Clear the session if the user is logged in
+            HttpContext.Session.Clear(); 
             return RedirectToPage("/Account");
         }
 
@@ -165,18 +174,20 @@ namespace TaskMenagerV2.Pages
                                 counter = 0;
                                 foreach (var project in projects.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
-                                    foreach (var task in project.Tasks)
+                                    if(project.Tasks != null)
                                     {
-                                        if (task.Completion == 1)
+                                        foreach (var task in project.Tasks)
                                         {
-                                            counter++;
+                                            if (task.Completion == 1)
+                                            {
+                                                counter++;
+                                            }
                                         }
-                                    }
-
-                                    if (counter == project.Tasks.Count)
-                                    {
-                                        achievementsList[i] = 1;
-                                        break;
+                                        if (counter == project.Tasks.Count)
+                                        {
+                                            achievementsList[i] = 1;
+                                            break;
+                                        }
                                     }
                                 }
                                 break;
@@ -197,16 +208,19 @@ namespace TaskMenagerV2.Pages
                                 int counterP = 0;
                                 foreach (var project in projects.Where(t => t.UserId == int.Parse(HttpContext.Session.GetString("UserId"))))
                                 {
-                                    foreach (var task in project.Tasks)
+                                    if (project.Tasks != null)
                                     {
-                                        if (task.Completion == 1)
+                                        foreach (var task in project.Tasks)
                                         {
-                                            counter++;
+                                            if (task.Completion == 1)
+                                            {
+                                                counter++;
+                                            }
                                         }
-                                    }
-                                    if (counter == project.Tasks.Count)
-                                    {
-                                        counterP++;
+                                        if (counter == project.Tasks.Count)
+                                        {
+                                            counterP++;
+                                        }
                                     }
                                 }
 

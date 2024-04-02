@@ -24,25 +24,29 @@
                 <button type="submit" class="btn btn-danger">Logout</button>
             </form>
 
-            <form id="deleteForm" method="post" asp-page-handler="DeleteAccount">
-                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete Account</button>
-                <input type="hidden" name="userId" value="@user.UserId" />
-            </form>
-
-            //add here
-
-            <h2 class="pt-4">Change Password</h2>
-            <form method="post" asp-page-handler="UpdatePassword" class="pt-2 align-content-center">
-                <input type="hidden" name="userId" value="@user.UserId" />
-                <div class="form-group w-25">
-                    <label asp-for="UserC.Password"></label>
-                    <input asp-for="UserC.Password" class="form-control" />
-                    <span asp-validation-for="UserC.Password" class="text-danger"></span>
+            <h2 class="pt-4 pb-1">Change Account data</h2>
+            <form method="post" asp-page-handler="UpdatePassword" class="pt-2 align-content-center d-flex justify-content-center w-100">
+                <div class="w-50 text-start">
+                    <input type="hidden" name="userId" value="@user.UserId" />
+                    <div class="form-group pb-3 w-100">
+                        <label asp-for="UserC.Email"></label>
+                        <input asp-for="UserC.Email" class="form-control" />
+                        <span asp-validation-for="UserC.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group pb-3 w-100">
+                        <label asp-for="UserC.Name"></label>
+                        <input asp-for="UserC.Name" class="form-control" />
+                        <span asp-validation-for="UserC.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group pb-3 w-100">
+                        <label asp-for="UserC.Password"></label>
+                        <input asp-for="UserC.Password" class="form-control" />
+                        <span asp-validation-for="UserC.Password" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary pt-2 mb-4">Change data</button>
                 </div>
-                <button type="submit" class="btn btn-primary pt-2">Change Password</button>
             </form>
 
-            //
             <div class="row justify-content-center pb-3">
                 <div class="col-md-8">
                     <h2>Completed Achievements</h2>
@@ -123,6 +127,10 @@
                 </div>
             </div>
 
+            <form id="deleteForm" method="post" class="pt-4" asp-page-handler="DeleteAccount">
+                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete Account</button>
+                <input type="hidden" name="userId" value="@user.UserId" />
+            </form>
         }
         else
         {
