@@ -55,7 +55,7 @@
                                 <form method="post" asp-page-handler="UpdateCompletion" class="pt-2">
                                     <input type="hidden" asp-for="@task.Id" name="taskId" />
                                     <button type="submit" name="Completion" id="Completion" class="btn btn-outline-light">
-                                        @(task.Completion != 0 ? "Completed" : "Not Completed")
+                                        @(task.Completion != 0 ? "Not completed" : "Completed")
                                     </button>
                                 </form>
                             </div>

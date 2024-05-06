@@ -17,6 +17,7 @@ builder.Services.AddScoped<IAchievementsService, AchievementsService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ProjectService>();
 builder.Services.AddScoped<Taskservice>();
+builder.Services.AddScoped<UserService>();
 
 builder.Services.AddSingleton(new EmailService("smtp.yandex.ru", 465, "ivangricev@yandex.com", "zglmlrdoheigzhmk"));
 

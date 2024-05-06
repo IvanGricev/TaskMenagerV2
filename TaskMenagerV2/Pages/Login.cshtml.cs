@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TaskMenagerV2.Pages.Services;
 
@@ -24,18 +24,38 @@ namespace TaskMenagerV2.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
+            //var users = await _userService.GetUsersByEmailAsync(Email);
+            //foreach(var user in users)
+            //{
+            //    if (user != null && user.Password == Password)
+            //    {
+            //        HttpContext.Session.SetString("UserId", user.UserId.ToString());
+            //        return RedirectToPage("/Account");
+            //    }
+            //}
+
+            //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            //return Page();
             var users = await _userService.GetUsersByEmailAsync(Email);
-            foreach(var user in users)
+            if (users.Count > 0)
             {
-                if (user != null && user.Password == Password)
+                var user = users.First(); 
+                if (user.Password == Password) 
                 {
                     HttpContext.Session.SetString("UserId", user.UserId.ToString());
                     return RedirectToPage("/Account");
                 }
+                else
+                {
+                    ModelState.AddModelError("Password", "Incorrect password.");
+                    return Page();
+                }
             }
-
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            return Page();
+            else
+            {
+                ModelState.AddModelError("Email", "User not found.");
+                return Page();
+            }
         }
     }
 }
