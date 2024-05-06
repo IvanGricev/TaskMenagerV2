@@ -38,7 +38,7 @@
                 <input type="hidden" asp-for="newTask.DateOfCreation" value="@DateTime.Now" />
                 <input type="hidden" asp-for="newTask.UserId" value="@HttpContext.Session.GetString("UserId")" />
                 <div class="form-group pt-3">
-                    <label asp-for="newTask.ProjectId"></label>
+                    <label asp-for="newTask.ProjectId">Project name</label>
                     <select asp-for="newTask.ProjectId" class="form-select w-50">
                         @foreach (var project in DbContext.Projects)
                         {
@@ -51,11 +51,11 @@
                 </div>
                 <div class="form-group pt-3 pb-3">
                     <label asp-for="newTask.Description"></label>
-                    <input asp-for="newTask.Description" class="form-control  w-50" />
+                    <textarea asp-for="newTask.Description" class="form-control  w-50"></textarea>
                 </div>
                 <div class="form-group pt-3 pb-3">
-                    <label asp-for="newTask.DateOfCompletion"></label>
-                    <input asp-for="newTask.DateOfCompletion" type="date" class="form-control w-50" value="@DateTime.Today" />
+                    <label asp-for="newTask.DateOfCompletion">Date Of completion</label>
+                    <input asp-for="newTask.DateOfCompletion" type="date" class="form-control w-50" value="@DateTime.Today"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>

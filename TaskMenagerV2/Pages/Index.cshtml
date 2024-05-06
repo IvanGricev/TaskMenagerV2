@@ -39,7 +39,7 @@
                                 }
                                 else
                                 {
-                                    color = colors[task.ProjectId];
+                                    color = colors[task.ProjectId - 1];
                                 }
                             }
                             <div class="card border border-3 rounded-5 text-white bg-@color h-100 w-100 d-flex flex-column justify-content-between p-3 shadow-sm">
@@ -173,7 +173,7 @@
                             }
                             else
                             {
-                                color = colors[project.ProjectId];
+                                color = colors[project.ProjectId - 1];
                             }
                         }
 
@@ -195,6 +195,7 @@
     }
     else
     {
+
         <p>Please log in or register.</p>
         <a class="btn text-body-secondary" asp-area="" asp-page="/Login">Log in</a>
         <a class="btn text-body-secondary" asp-area="" asp-page="/Registration">Register</a>

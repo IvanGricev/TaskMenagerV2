@@ -1,4 +1,4 @@
-
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -34,9 +34,18 @@ namespace TaskMenagerV2.Pages
         }
 
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-
+            if (HttpContext.Session.GetString("UserId") == null)
+            {
+                return RedirectToPage("/Login");
+            }
+            else
+            {
+                Console.WriteLine($"Logged in {HttpContext.Session.GetString("UserId")}");
+                return Page();
+            }
         }
+
     }
 }

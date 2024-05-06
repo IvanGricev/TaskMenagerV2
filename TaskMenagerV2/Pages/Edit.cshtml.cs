@@ -11,12 +11,14 @@ namespace TaskMenagerV2.Pages
     {
         private readonly MyDbContext _dbContext;
         private readonly ProjectService _projectService;
-        public EditModel(MyDbContext dbContext, ProjectService projectService)
+        private readonly Taskservice _taskService;
+        public EditModel(MyDbContext dbContext, ProjectService projectService, Taskservice Taskservice)
         {
             _dbContext = dbContext;
             _projectService = projectService;
             editProject = new Project();
             editTask = new Tasks();
+            _taskService = Taskservice;
         }
 
         [BindProperty]
@@ -59,15 +61,22 @@ namespace TaskMenagerV2.Pages
                     await _dbContext.SaveChangesAsync();
                 }
             }
-            //else if(Action == "DeleteProject")//bug
-            //{
-            //    var projectD = await _dbContext.Projects.FindAsync(editProject.ProjectId);
-            //    if (projectD != null)
-            //    {
-            //        await _projectService.DeleteProjectAsync(projectD.ProjectId);
-            //    }
-            //}
-
+            else if (Action == "DeleteProject")
+            {
+                var projectD = await _dbContext.Projects.FindAsync(editProject.ProjectId);
+                if (projectD != null)
+                {
+                    await _projectService.DeleteProjectAsync(projectD.ProjectId);
+                }
+            }
+            else if (Action == "DeleteTask")
+            {
+                var taskD = await _dbContext.Tasks.FindAsync(editTask.Id);
+                if (taskD != null)
+                {
+                    await _taskService.DeleteTaskAsync(taskD.Id);
+                }
+            }
             return RedirectToPage("Index");
         }
     }
